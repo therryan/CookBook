@@ -31,7 +31,6 @@ $recipe->setIngredients($_POST["ingredients"]);
 $recipe->setInstructions($_POST["instructions"]);
 $recipe->setTimeRequired($_POST["time"]);
 
-echo $recipe->mysqlInsert();
 mysql_query($recipe->mysqlInsert());
 
 $_POST = array();
