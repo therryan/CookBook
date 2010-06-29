@@ -1,15 +1,10 @@
-<!DOCTYPE>
-<html>
-
-<head>
-</head>
-
-<body>
+<?php require("view/inc/head.php");?>
+	
 	<form action="add.php" method=post>
-		Title: <input type=text name=title /> <br />
-		Ingredients: <textarea name=ingredients></textarea> <br />
-		Instructions: <textarea name=instructions></textarea> <br />
-		Time required: <input type=text name=time /> 
+		Title: <br /> <input type=text name=title /> <br />
+		Ingredients: <br /> <textarea name=ingredients></textarea> <br />
+		Instructions: <br /> <textarea name=instructions></textarea> <br />
+		Time required: <br /> <input type=text name=time /> 
 			(minutes) <br />
 		<input type=submit value="Submit" /> <br />
 	</form>
@@ -19,7 +14,7 @@
 
 <?php
 
-require("recipe.class.php");
+require("model/recipe.class.php");
 
 $db = mysql_connect("127.0.0.1", "cookbook") or die(mysql_error());
 mysql_select_db("cookbook") or die(mysql_error());

@@ -1,6 +1,7 @@
+<?php require("view/inc/head.php");?>
 <?php
 
-require("recipe.class.php");
+require("model/recipe.class.php");
 
 $db = mysql_connect("127.0.0.1", "cookbook") or die(mysql_error());
 mysql_select_db("cookbook") or die(mysql_error());
@@ -23,3 +24,6 @@ while ($row = mysql_fetch_assoc($data))
 }
 
 ?>
+</body>
+
+</html>
