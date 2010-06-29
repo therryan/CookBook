@@ -1,9 +1,5 @@
 <?php require("view/inc/head.php");?>
-<?php
-
-
-
-?>
+<?php?>
 
 </body>
 
