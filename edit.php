@@ -7,21 +7,13 @@ if (!(count($_GET) > 0) || !is_numeric($_GET["id"]))
 	// So that nothing else gets executed
 	exit();
 }
-?>
-<!DOCTYPE html>
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="view/styles/main.css">
-	<link rel="stylesheet" type="text/css" href="view/styles/print.css">
-</head>
+// This has to be moved here because of header()
+require_once("view/inc/head.php");
 
-<body>
-<?php
 require_once("model/recipe.class.php");
+require_once("model/ingredient.class.php");
 
 $recipe = new Recipe($_GET["id"]);
 echo $recipe->repr();
 
 ?>
-</body>
-</html>

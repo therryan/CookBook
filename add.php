@@ -1,4 +1,4 @@
-<?php require("view/inc/head.php");?>
+<?php require_once("view/inc/head.php");?>
 	
 	<form action="add.php" method=post>
 		<div>
@@ -22,7 +22,7 @@
 
 <?php
 
-require("model/recipe.class.php");
+require_once("model/recipe.class.php");
 
 $db = new mysqli("127.0.0.1", "cookbook", "", "cookbook") or die(mysqli_error($db));
 

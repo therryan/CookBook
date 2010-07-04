@@ -1,12 +1,13 @@
-<?php require("view/inc/head.php");?>
-<?php
+<?php require_once("view/inc/head.php");?>
 
-require("model/recipe.class.php");
+<?php
+require_once("model/recipe.class.php");
+require_once("model/ingredient.class.php");
 
 if (count($_GET) > 0 && array_key_exists("id", $_GET))
 {
 	$recipe = new Recipe($_GET["id"]);
-	$recipe->repr();
+	echo $recipe->composeHTML();
 }
 else
 {
@@ -17,8 +18,8 @@ else
 	for ($i = 1; $i <= $data->num_rows; $i++)
 	{
 		$recipe = new Recipe($i);
-		$recipe->repr();
-		echo "<br />";
+		echo "<p><a href=show.php?id=" . $recipe->getID() . ">"
+		. $recipe->getTitle() . "</a></p>\n";
 	
 		unset($recipe);
 	}
@@ -26,6 +27,6 @@ else
 
 $db->close();
 ?>
-</body>
 
+</body>
 </html>

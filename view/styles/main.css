@@ -3,6 +3,12 @@
 	font-family: Verdana, Helvetica, sans-serif;
 }
 
+* a
+{
+	color: blue;
+	text-decoration: none;
+}
+
 
 /* A simple horizontal navmenu */
 .hlist li
