@@ -3,26 +3,28 @@
 
 require("model/recipe.class.php");
 
-$db = mysql_connect("127.0.0.1", "cookbook") or die(mysql_error());
-mysql_select_db("cookbook") or die(mysql_error());
-
-$data = mysql_query("SELECT * FROM recipes");
-
-while ($row = mysql_fetch_assoc($data))
+if (count($_GET) > 0 && array_key_exists("id", $_GET))
 {
-	$recipe = new Recipe();
-	
-	$recipe->setTitle($row["title"]);
-	$recipe->setTimeRequired($row["time"]);
-	$recipe->setIngredients($row["ingredients"]);
-	$recipe->setInstructions($row["instructions"]);
-
+	$recipe = new Recipe($_GET["id"]);
 	$recipe->repr();
-	echo "<br />";
+}
+else
+{
+	$db = new mysqli("127.0.0.1", "cookbook", "", "cookbook") or die(mysqli_error($db));
+	$data = $db->query("SELECT * FROM recipes");
+
+	// We need to start at 1 because the first ID is 1
+	for ($i = 1; $i <= $data->num_rows; $i++)
+	{
+		$recipe = new Recipe($i);
+		$recipe->repr();
+		echo "<br />";
 	
-	unset($recipe);
+		unset($recipe);
+	}
 }
 
+$db->close();
 ?>
 </body>
 

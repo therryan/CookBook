@@ -24,8 +24,7 @@
 
 require("model/recipe.class.php");
 
-$db = mysql_connect("127.0.0.1", "cookbook") or die(mysql_error());
-mysql_select_db("cookbook") or die(mysql_error());
+$db = new mysqli("127.0.0.1", "cookbook", "", "cookbook") or die(mysqli_error($db));
 
 // Insert the data to MySQL by creating a new Recipe-object
 $recipe = new Recipe();
@@ -35,7 +34,7 @@ $recipe->setIngredients($_POST["ingredients"]);
 $recipe->setInstructions($_POST["instructions"]);
 $recipe->setTimeRequired($_POST["time"]);
 
-mysql_query($recipe->mysqlInsert());
+$db->query($recipe->mysqlInsert());
 
 // Empty the POST array by initing it
 $_POST = array();
