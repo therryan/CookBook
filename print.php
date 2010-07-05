@@ -1,11 +1,23 @@
 <?php
-if (!(count($_GET) > 0) || !is_numeric($_GET["id"]))
+
+if (count($_GET) == 0 || !is_numeric($_GET["id"]))
 {
 	// The user can choose the entry they want to edit here
 	header("Location: show.php");
 	
 	// So that nothing else gets executed
 	exit();
+}
+else
+{
+	require_once("model/recipe.class.php");
+	
+	$recipe = new Recipe($_GET["id"]);
+	
+	if ($recipe->isEmpty())
+	{
+		header("Location: show.php");
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -17,9 +29,7 @@ if (!(count($_GET) > 0) || !is_numeric($_GET["id"]))
 
 <body>
 <?php
-require_once("model/recipe.class.php");
 
-$recipe = new Recipe($_GET["id"]);
 echo $recipe->repr();
 
 ?>

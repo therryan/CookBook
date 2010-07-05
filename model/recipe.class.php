@@ -1,5 +1,6 @@
 <?php
 require_once("ingredient.class.php");
+require_once("funcs.php");
 
 class Recipe
 {
@@ -27,9 +28,11 @@ class Recipe
 	/* --- Methods --------------------------- */
 	public function getRecipeByID($requestedID)
 	{
+		
 		if (is_numeric($requestedID))
 		{
-			$db = new mysqli("127.0.0.1", "cookbook", "", "cookbook");
+			$db = mysqliConnect();
+			
 			$data = $db->query("SELECT * FROM recipes WHERE id = $requestedID");
 
 			$row = $data->fetch_assoc();
@@ -38,11 +41,22 @@ class Recipe
 			$this->setTime($row["time"]);
 			$this->setIngredients($row["ingredients"]);
 			$this->setInstructions($row["instructions"]);
-			
+		
 			$db->close();
 		}
 	}
+	
+	// Returns the SQL code for inserting itself into MySQL
+	public function mysqlInsert()
+	{
+		return "INSERT INTO recipes ".
+		       "(title, time, ingredients, instructions) ".
+		       "VALUES ('$this->title', $this->time, ".
+		 	   "'$this->ingr', '$this->instr')";
+	}
+	
 
+	/* --- Web-related methods -------------- */
 	public function repr()
 	{
 		return "<p>Title: ".$this->title."</p>".
@@ -61,13 +75,20 @@ class Recipe
 		return $contents;
 	}
 	
-	// Returns the SQL code for inserting itself into MySQL
-	public function mysqlInsert()
+	public function titleAsLink()
 	{
-		return "INSERT INTO recipes ".
-		       "(title, time, ingredients, instructions) ".
-		       "VALUES ('$this->title', $this->time, ".
-		 	   "'$this->ingr', '$this->instr')";
+		return "<p><a href=show.php?id=".$this->getID().">"
+		.$this->getTitle()."</a></p>\n";
+	}
+	
+	/* --- Status Methods -------------------- */
+	// We only need to check the ID, because it *should* be set when reading from MySQL
+	public function isEmpty()
+	{
+		if (is_null($this->id))
+		{
+			return true;
+		}
 	}
 	
 	/* --- Getters --------------------------- */
