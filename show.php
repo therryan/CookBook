@@ -32,6 +32,14 @@ else
 	
 		unset($recipe);
 	}
+	
+	while ($row = $data->fetch_assoc())
+	{
+		$recipe = new Recipe($row["id"]);
+		echo $recipe->titleAsLink();
+		
+		unset($recipe);
+	}
 }
 
 $db->close();

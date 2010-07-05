@@ -1,9 +1,6 @@
 # Rewrite
 Options +FollowSymlinks
 RewriteEngine on
-#RewriteRule ^show-([0-9]+) show.php?id=$1
-#RewriteRule ^edit-([0-9]+) edit.php?id=$1
-#RewriteRule ^print-([0-9]+) print.php?id=$1
 RewriteRule ^search-title-([A-Za-z]+) search.php?title=$1
 RewriteRule ^(show|edit|print)-([0-9]+) $1.php?id=$2
 

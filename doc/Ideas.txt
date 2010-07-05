@@ -1,36 +1,14 @@
 SUGGESTIONS:
-	- Easier URLs ('/show/<ID>' instead of '/show.php?id=')
-	- Favorites
-	- Editing (incl. deleting)
 	- Printing
+	- Categorization
 	- Installation, MySQL setup etc.
+	- Favorites
 	- Config
 	- Translations
 
 HOMEPAGE:
 	- A dashboard of recent recipes, favorites etc.
-	- A search box
-	
-ADDRESSES:
-	- /
-	- /add/
-	- /show/
-	- /search/
-	
-ADDRESS SUGGESTIONS/IDEAS:
-	- /settings/ || /config/
-	- /print/<ID>
-	- /show/<ID>
-	- /edit/<ID>
-	
-	
+	- A generic search box
+		
 TECHICAL:
 	- Different Ingredients and Instructions should be seperated, shown on different rows. (When adding a new recipe, ask for a new instruction and a new ingredient)
-
-MODEL:
-	CLASSES:
-		- Print (takes the recipe and generates a print-friendly page)
-		- Ingredient (name, amount, unit etc.)
-		
-	Recipe:
-		- A constructor that calls e.g. getRecipeByID(int ID) 

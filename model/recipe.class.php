@@ -46,23 +46,59 @@ class Recipe
 		}
 	}
 	
-	// Returns the SQL code for inserting itself into MySQL
+	/* --- Database methods ------------------ */
 	public function mysqlInsert()
 	{
-		return "INSERT INTO recipes ".
-		       "(title, time, ingredients, instructions) ".
-		       "VALUES ('$this->title', $this->time, ".
-		 	   "'$this->ingr', '$this->instr')";
+		$db = mysqliConnect();
+		$db->query("INSERT INTO recipes ".
+		           "(title, time, ingredients, instructions) ".
+		           "VALUES ('$this->title', '$this->time', ".
+				   "'$this->ingr', '$this->instr')");
+		$db->close();
 	}
 	
+	public function mysqlUpdate()
+	{
+		$db = mysqliConnect();
+		$db->query("UPDATE recipes ".
+		           "SET title = '$this->title', ingredients = '$this->ingr', ".
+		           "time = '$this->time', instructions = '$this->instr' ".
+		           "WHERE id = $this->id");
+		$db->close();
+	}
+	
+	public function mysqlDelete()
+	{
+		if (!$this->isEmpty())
+		{
+			$db = mysqliConnect();
+			$db->query("DELETE FROM recipes ".
+			           "WHERE id = $this->id");
+			$db->close();
+		}
+	}	
 
 	/* --- Web-related methods -------------- */
 	public function repr()
 	{
+		$instr = "<ol>\n";
+		foreach (explode("\n", $this->instr) as $val)
+		{
+			$instr .= "<li>$val</li>\n";
+		}
+		$instr .= "</ol>\n";
+		
+		$ingr = "<ul>\n";
+		foreach (explode("\n", $this->ingr) as $val)
+		{
+			$ingr .= "<li>$val</li>\n";
+		}
+		$ingr .= "</ul>\n";
+		
 		return "<p>Title: ".$this->title."</p>".
 		       "<p>Time required: ".$this->time." minutes</p>".
-		       "<p>Ingredients: ".$this->ingr."</p>".
-		       "<p>Instructions: ".$this->instr."</p>";
+		       "<p>Ingredients: ".$ingr."</p>".
+		       "<p>Instructions: ".$instr."</p>";
 	}
 	
 	
@@ -70,6 +106,7 @@ class Recipe
 	{
 		$contents = $this->repr();
 		$contents .= "<p><a href='edit.php?id=".$this->getID()."'>Edit this entry</a></p>\n";
+		$contents .= "<p><a href='edit.php?id=".$this->getID()."&action=delete'>Delete this entry</a></p>\n";
 		$contents .= "<p><a href='print.php?id=".$this->getID()."'>Print friendly</a></p>\n";
 		
 		return $contents;
@@ -82,7 +119,7 @@ class Recipe
 	}
 	
 	/* --- Status Methods -------------------- */
-	// We only need to check the ID, because it *should* be set when reading from MySQL
+	// We only need to check the ID, because it is set when reading from MySQL
 	public function isEmpty()
 	{
 		if (is_null($this->id))
@@ -94,7 +131,7 @@ class Recipe
 	/* --- Getters --------------------------- */
 	public function getID() {return $this->id;}
 	public function getTitle() {return $this->title;}
-	public function getTimeRequired() {return $this->time;}
+	public function getTime() {return $this->time;}
 	public function getIngredients() {return $this->ingr;}
 	public function getInstructions() {return $this->instr;}
 	
