@@ -1,7 +1,7 @@
 # Rewrite
 Options +FollowSymlinks
 RewriteEngine on
-RewriteRule ^search-title-([A-Za-z]+) search.php?title=$1
+RewriteRule ^search-(ingredients|title|all)-([A-Za-z]+) search.php?$1=$2
 RewriteRule ^(show|edit|print)-([0-9]+) $1.php?id=$2
 
 # Custom error documents

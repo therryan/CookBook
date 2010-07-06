@@ -106,7 +106,7 @@ class Recipe
 	{
 		$contents = $this->repr();
 		$contents .= "<p><a href='edit.php?id=".$this->getID()."'>Edit this entry</a></p>\n";
-		$contents .= "<p><a href='edit.php?id=".$this->getID()."&action=delete'>Delete this entry</a></p>\n";
+		$contents .= "<p><a href='edit.php?id=".$this->getID()."&action=confirm_deletion'>Delete this entry</a></p>\n";
 		$contents .= "<p><a href='print.php?id=".$this->getID()."'>Print friendly</a></p>\n";
 		
 		return $contents;

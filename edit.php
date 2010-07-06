@@ -16,11 +16,23 @@ require_once("model/ingredient.class.php");
 
 $recipe = new Recipe($_GET["id"]);
 
+// If the id given doesn't actually correspond to any entry
 if ($recipe->isEmpty())
 {
 	die("This entry doesn't exist, please <a href='show.php'>select</a> another one.");
 }
 
+if ($_GET["action"] == "confirm_deletion")
+{
+	echo "<p>Really delete '".$recipe->getTitle()."'?</p>\n";
+	echo "<a href=edit.php?id=".$recipe->getID()."&action=delete>Yes</a>\n";
+	echo "<a href=show.php?id=".$recipe->getID().">No</a>\n";
+	
+	// So that the forms aren't shown
+	exit();
+}
+
+// Deletion, should only be used from confirm_deletion
 if ($_GET["action"] == "delete")
 {
 	$recipe->mysqlDelete();
@@ -28,6 +40,7 @@ if ($_GET["action"] == "delete")
 	exit();
 }
 
+// Editing
 if (count($_POST) > 0)
 {
 	$recipe->setTitle($_POST["title"]);
