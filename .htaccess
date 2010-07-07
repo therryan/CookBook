@@ -7,8 +7,3 @@ RewriteRule ^(show|edit|print)-([0-9]+) $1.php?id=$2
 # Custom error documents
 ErrorDocument 404 /index.php
 ErrorDocument 500 /index.php
-
-# Access control
-Order deny,allow
-deny from all
-allow from 127.0.0.1

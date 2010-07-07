@@ -35,5 +35,6 @@ $_POST = array();
 	</div>
 	<input type=submit value="Submit" /> <br />
 </form>
+</div>
 </body>
 </html>

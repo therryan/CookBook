@@ -8,4 +8,5 @@
 </head>
 
 <body>
+	<div id="container">
 <?php require("header.php");?>

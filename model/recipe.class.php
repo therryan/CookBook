@@ -22,7 +22,24 @@ class Recipe
 	
 	public function __toString()
 	{
-		return $this->repr();
+		$instr = "<ol>\n";
+		foreach (explode("\n", $this->instr) as $val)
+		{
+			$instr .= "<li>$val</li>\n";
+		}
+		$instr .= "</ol>\n";
+		
+		$ingr = "<ul>\n";
+		foreach (explode("\n", $this->ingr) as $val)
+		{
+			$ingr .= "<li>$val</li>\n";
+		}
+		$ingr .= "</ul>\n";
+		
+		return "<p>Title: ".$this->title."</p>".
+		       "<p>Time required: ".$this->time." minutes</p>".
+		       "<p>Ingredients: ".$ingr."</p>".
+		       "<p>Instructions: ".$instr."</p>";
 	}
 
 	/* --- Methods --------------------------- */
@@ -78,9 +95,10 @@ class Recipe
 		}
 	}	
 
-	/* --- Web-related methods -------------- */
-	public function repr()
+	/* --- Web-related methods -------------- */	
+	public function composeHTML()
 	{
+		// Instructions
 		$instr = "<ol>\n";
 		foreach (explode("\n", $this->instr) as $val)
 		{
@@ -88,6 +106,7 @@ class Recipe
 		}
 		$instr .= "</ol>\n";
 		
+		// Ingredients
 		$ingr = "<ul>\n";
 		foreach (explode("\n", $this->ingr) as $val)
 		{
@@ -95,19 +114,23 @@ class Recipe
 		}
 		$ingr .= "</ul>\n";
 		
-		return "<p>Title: ".$this->title."</p>".
-		       "<p>Time required: ".$this->time." minutes</p>".
-		       "<p>Ingredients: ".$ingr."</p>".
-		       "<p>Instructions: ".$instr."</p>";
-	}
-	
-	
-	public function composeHTML()
-	{
-		$contents = $this->repr();
-		$contents .= "<p><a href='edit.php?id=".$this->getID()."'>Edit this entry</a></p>\n";
-		$contents .= "<p><a href='edit.php?id=".$this->getID()."&action=confirm_deletion'>Delete this entry</a></p>\n";
-		$contents .= "<p><a href='print.php?id=".$this->getID()."'>Print friendly</a></p>\n";
+		// The menu
+		$menu = "<ul class=hlist>";
+		$menu .= "<li><a href='edit.php?id=".$this->getID()
+		    ."'>Edit</a></li>\n";
+		$menu .= "<li><a href='edit.php?id=".$this->getID()
+		    ."&action=confirm_deletion'>Delete</a></li>\n";
+		$menu .= "<li><a href='print.php?id=".$this->getID()
+		    ."'>Print</a></li>\n";
+		$menu .= "</ul>";
+		
+		// The actual code
+		$contents = "<h2>".$this->title."</h2>".$menu.
+		            "<p>".$this->time." minutes</p>".
+		            "<div class=rounded><h4>Ingredients</h4> "
+					    .$ingr."</div>".
+		            "<div class=rounded><h4>Instructions</h4>"
+		                .$instr."</div>";
 		
 		return $contents;
 	}

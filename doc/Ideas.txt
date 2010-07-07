@@ -4,11 +4,8 @@ SUGGESTIONS:
 	- Installation, MySQL setup etc.
 	- Favorites
 	- Config
+	- Log (MySQL wrapper class)
 	- Translations
 
 HOMEPAGE:
 	- A dashboard of recent recipes, favorites etc.
-	- A generic search box
-		
-TECHICAL:
-	- Different Ingredients and Instructions should be seperated, shown on different rows. (When adding a new recipe, ask for a new instruction and a new ingredient)

@@ -40,9 +40,9 @@ else
 		
 		unset($recipe);
 	}
-}
 
-$db->close();
+	$db->close();
+}
 ?>
 
 </body>

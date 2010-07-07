@@ -1,6 +1,10 @@
+/* --- Import -------------------------------- */
+@import url("fonts.css");
+
+/* --- Global -------------------------------- */
 *
 {
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: "MuseoSans 500", Verdana, Helvetica, sans-serif;
 }
 
 * a
@@ -9,25 +13,67 @@
 	text-decoration: none;
 }
 
+html, body
+{
+	
+}
 
-/* A simple horizontal navmenu */
+/* --- #container ---------------------------- */
+#container
+{
+	position: relative;
+	margin: 0 auto;
+	padding-left: 10px;
+	width: 99%;
+	background-color: white;
+}
+
+/* --- .hlist -------------------------------- */
+.hlist
+{
+	padding-left: 0;
+}
+
 .hlist li
 {
 	display: inline;
 	list-style-type: none;
 	padding-right: 20px;
-
 }
-.hlist a
+
+.navbar a
 {
-	font-family: Verdana, Helvetica, sans-serif;
 	color: black;
 	text-decoration: none;
 	text-transform: uppercase;
 	text-align: center;
 }
+/* --- Text styles --------------------------- */
+.bold
+{
+	font-weight: bold;
+}
+
+/* --- Other --------------------------------- */
+.rounded
+{
+	padding: 0px 0;
+	background-color: #E6E6E6;
+	-webkit-border-radius: 20px;
+}
+div.rounded li
+{
+	margin-left: 5%;
+}
+div.rounded h4
+{
+	margin-left: 20px;
+	text-transform: uppercase;
+}
 
 form div p
 {
-	margin-bottom: 0px;
+	/* Remove the space between the text input and
+	 * the title above it in forms */
+	margin-bottom: 0;
 }
