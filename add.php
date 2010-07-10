@@ -22,18 +22,19 @@ $_POST = array();
 ?>
 <form action="add.php" method=post>
 	<div>
-		<p>Title:</p> <input type=text name=title />
+		<p><?php tr("Title");?>:</p> <input type=text name=title />
 	</div>
 	<div>
-		<p>Ingredients:</p> <textarea name=ingredients rows=10 cols=40></textarea>
+		<p><?php tr("Ingredients");?>:</p> <textarea name=ingredients rows=10 cols=40></textarea>
 	</div>
 	<div>
-		<p>Instructions:</p> <textarea name=instructions rows=20 cols=80></textarea>
+		<p><?php tr("Instructions");?>:</p> <textarea name=instructions rows=20 cols=80></textarea>
 	</div>
 	<div>
-		<p>Time required:</p> <input type=text name=time /> minutes
+		<p><?php tr("Time required");?>:</p> <input type=text name=time />
+		<?php tr("minutes");?> 
 	</div>
-	<input type=submit value="Submit" /> <br />
+	<input type=submit value=<?php tr("Save");?> />
 </form>
 </div>
 </body>

@@ -1,6 +1,6 @@
 <?php
-require_once("ingredient.class.php");
 require_once("funcs.php");
+require_once("view/tr/tr.php");
 
 class Recipe
 {
@@ -20,6 +20,7 @@ class Recipe
 		}
 	}
 	
+	// Mostly for debugging, composeHTML should be used normally
 	public function __toString()
 	{
 		$instr = "<ol>\n";
@@ -96,7 +97,7 @@ class Recipe
 	}	
 
 	/* --- Web-related methods -------------- */	
-	public function composeHTML()
+	public function composeHTML($withLinks = TRUE)
 	{
 		// Instructions
 		$instr = "<ol>\n";
@@ -110,26 +111,41 @@ class Recipe
 		$ingr = "<ul>\n";
 		foreach (explode("\n", $this->ingr) as $val)
 		{
+			// So that we can cross-reference other recipes
+			// with the syntax: {<ID>|<What we want to be shown>}
+			$val = preg_replace("/\{(\d+)\|([a-z]+)\}/",
+			"<a href=show.php?id=$1>$2</a>", $val);
+			
 			$ingr .= "<li>$val</li>\n";
 		}
 		$ingr .= "</ul>\n";
 		
 		// The menu
-		$menu = "<ul class=hlist>";
-		$menu .= "<li><a href='edit.php?id=".$this->getID()
-		    ."'>Edit</a></li>\n";
-		$menu .= "<li><a href='edit.php?id=".$this->getID()
-		    ."&action=confirm_deletion'>Delete</a></li>\n";
-		$menu .= "<li><a href='print.php?id=".$this->getID()
-		    ."'>Print</a></li>\n";
-		$menu .= "</ul>";
+		if ($withLinks)
+		{
+			$menu = "<ul class=hlist style=\"float:right;\">";
+			$menu .= "<li><a href='edit.php?id=".$this->getID()
+			    ."'>".trr("Edit")."</a></li>\n";
+			$menu .= "<li><a href='edit.php?id=".$this->getID()
+			    ."&action=confirm_deletion'>".trr("Delete")."</a></li>\n";
+			$menu .= "<li><a href='print.php?id=".$this->getID()
+			    ."'>".trr("Print")."</a></li>\n";
+			$menu .= "</ul>";
+		}
+		else
+		{
+			$menu = "";
+		}
 		
 		// The actual code
-		$contents = "<h2>".$this->title."</h2>".$menu.
-		            "<p>".$this->time." minutes</p>".
-		            "<div class=rounded><h4>Ingredients</h4> "
+		$contents = "<h2>".$this->title."</h2>".
+		
+		            "<p>".$this->time." ".trr("minutes")."</p>".$menu.
+		
+		            "<div class=rounded><h4>".trr("Ingredients")."</h4> "
 					    .$ingr."</div>".
-		            "<div class=rounded><h4>Instructions</h4>"
+					
+		            "<div class=rounded><h4>".trr("Instructions")."</h4>"
 		                .$instr."</div>";
 		
 		return $contents;

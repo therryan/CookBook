@@ -1,4 +1,35 @@
+@import url("fonts.css");
+
 *
 {
-	font-size: 1.1em;
+	font-size: 1.05em;
+	font-family: "MuseoSans 500", Verdana, sans-serif;
+}
+
+a
+{
+	color: black;
+	font-style: italic;
+}
+
+a:after
+{
+	
+}
+
+p
+{
+	margin: 5px 0;
+}
+
+h2
+{
+	margin: 0;
+	font-size: 2em;
+}
+
+h4
+{
+	font-size: 1.3em;
+	margin-bottom: 0;
 }

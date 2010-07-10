@@ -1,6 +1,7 @@
 SUGGESTIONS:
-	- Printing
-	- Categorization
+	- A brief introduction to each recipe, shown on the titleAsLink
+	- Printing (Better styling etc.)
+	- Categories
 	- Installation, MySQL setup etc.
 	- Favorites
 	- Config

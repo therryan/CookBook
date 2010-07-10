@@ -10,9 +10,7 @@ if (!(count($_GET) > 0) || !is_numeric($_GET["id"]))
 }
 // This has to be moved here because of header()
 require_once("view/inc/head.php");
-
 require_once("model/recipe.class.php");
-require_once("model/ingredient.class.php");
 
 $recipe = new Recipe($_GET["id"]);
 
@@ -22,11 +20,18 @@ if ($recipe->isEmpty())
 	die("This entry doesn't exist, please <a href='show.php'>select</a> another one.");
 }
 
+if ($_GET["action"] == "show")
+{
+	header("Location: show.php?id=".$recipe->getID());
+}
+
 if ($_GET["action"] == "confirm_deletion")
 {
-	echo "<p>Really delete '".$recipe->getTitle()."'?</p>\n";
-	echo "<a href=edit.php?id=".$recipe->getID()."&action=delete>Yes</a>\n";
-	echo "<a href=show.php?id=".$recipe->getID().">No</a>\n";
+	echo "<p>".trr("Really delete")." '".$recipe->getTitle()."'?</p>\n";
+	echo "<a href=edit.php?id=".$recipe->getID()
+	."&action=delete>".trr("Yes")."</a>\n <br />";
+	
+	echo "<a href=show.php?id=".$recipe->getID().">".trr("No")."</a>\n";
 	
 	// So that the forms aren't shown
 	exit();
@@ -53,24 +58,24 @@ if (count($_POST) > 0)
 }
 
 ?>
-<form action="edit.php?id=<?php echo $recipe->getID(); ?>" method=post>
+<form action="edit.php?id=<?php echo $recipe->getID(); ?>&action=show" method=post>
 	<div>
-		<p>Title:</p> <input type=text name=title
+		<p><?php tr("Title");?>:</p> <input type=text name=title
 		value=<?php echo $recipe->getTitle(); ?> />
 	</div>
 	<div>
-		<p>Ingredients:</p> <textarea name=ingredients rows=10 cols=40>
+		<p><?php tr("Ingredients");?>:</p> <textarea name=ingredients rows=10 cols=40>
 <?php echo $recipe->getIngredients(); ?></textarea>
 	</div>
 	<div>
-		<p>Instructions:</p> <textarea name=instructions rows=20 cols=80>
+		<p><?php tr("Instructions");?>:</p> <textarea name=instructions rows=20 cols=80>
 <?php echo $recipe->getInstructions(); ?></textarea>
 	</div>
 	<div>
-		<p>Time required:</p> <input type=text name=time 
-		value=<?php echo $recipe->getTime(); ?> /> minutes
+		<p><?php tr("Time required");?>:</p> <input type=text name=time 
+		value=<?php echo $recipe->getTime(); ?> /> <?php tr("minutes");?>
 	</div>
-	<input type=submit value="Save" /> <br />
+	<input type=submit value=<?php tr("Save");?> /> <br />
 </form>
 </body>
 </html>

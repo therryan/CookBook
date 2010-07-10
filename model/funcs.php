@@ -1,5 +1,4 @@
 <?php
-
 // Connect to MySQL using mysqli
 // Should check conf for params
 function mysqliConnect($address = "127.0.0.1", $user = "cookbook", $passwd = "", $default = "cookbook")
@@ -13,5 +12,4 @@ function mysqliConnect($address = "127.0.0.1", $user = "cookbook", $passwd = "",
 	
 	return $db;
 }
-
 ?>

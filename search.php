@@ -26,9 +26,7 @@ if (count($_GET) > 0)
 		$query = "SELECT id FROM recipes WHERE ingredients LIKE '%"
 		.$db->real_escape_string($_GET["ingredients"])."%'";
 	}
-	
-	echo $query."\n";
-	
+		
 	// So we don't execute the query if none of the above were true
 	if (!empty($query))
 	{
@@ -45,26 +43,26 @@ if (count($_GET) > 0)
 	
 	if ($data->num_rows > 0)
 	{
-		echo "<p><a href=search.php>Search again</a></p>\n";
+		echo "<p><a href=search.php>".trr("Search again")."</a></p>\n";
 		// If we've found something, let's not show the forms
 		exit();
 	}
 	else
 	{
-		echo "<p>Your search query didn't match anything. Please try again.</p>\n";
+		echo "<p>".trr("Your search query didn't match anything. Please try again.")."</p>\n";
 	}
 }
 ?>
 <form action="search.php" method=get>
 	<div>
-		<p>Search everything:</p><input type=text name=all>
+		<p><?php tr("Search everything");?>:</p><input type=text name=all>
 	</div>
 	<div>
-		<p>Search titles:</p><input type=text name=title>
+		<p><?php tr("Search titles");?>:</p><input type=text name=title>
 	</div>
 	<div>
-		<p>Search ingredients:</p><input type=text name=ingredients>
+		<p><?php tr("Search ingredients");?>:</p><input type=text name=ingredients>
 	</div>
-	<input type=submit value="Search">
+	<input type=submit value=<?php tr("Search");?>>
 </body>
 </html>

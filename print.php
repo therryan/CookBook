@@ -23,14 +23,14 @@ else
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="view/styles/main.css">
 	<link rel="stylesheet" type="text/css" href="view/styles/print.css">
 </head>
 
 <body>
 <?php
 
-echo $recipe->repr();
+// Without the links
+echo $recipe->composeHTML(FALSE);
 
 ?>
 </body>
