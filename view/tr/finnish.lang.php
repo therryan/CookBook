@@ -10,7 +10,8 @@ $lang = array(
 	
 	/* add.php */
 	"Title"         => "Nimi",
-	"Ingredients"   => "Ainesosat",
+	"Category"      => "Kategoria",
+	"Ingredients"   => "Aineet",
 	"Instructions"  => "Ohjeet",
 	"Time required" => "Aikaa tarvitaan",
 	"minutes"       => "minuuttia",
@@ -29,9 +30,18 @@ $lang = array(
 	"Haullasi ei löytynyt mitään. Ole hyvä ja yritä uudelleen.",
 	
 	/* edit.php */
-	"Really delete" => "Haluatko varmasti poistaa ohjeen ",
-	"Yes"           => "Kyllä",
-	"No"            => "Ei",
+	"Really delete"    => "Haluatko varmasti poistaa ohjeen ",
+	"Yes"              => "Kyllä",
+	"No"               => "Ei",
+	"Recipe"           => "Ohje",
+	"has been deleted" => "on poistettu",
+	"This entry doesn't exist, please" =>
+	"Tätä ohjetta ei ole olemassa,",
+	"select"           => "valitse",
+	"another one"      => "joku toinen",
+	
+	/* categories.php */
+	"Category name" => "Kategorian nimi",
 	
 	/* recipe.class.php */
 	"Edit"   => "Muokkaa",

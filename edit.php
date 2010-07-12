@@ -17,7 +17,8 @@ $recipe = new Recipe($_GET["id"]);
 // If the id given doesn't actually correspond to any entry
 if ($recipe->isEmpty())
 {
-	die("This entry doesn't exist, please <a href='show.php'>select</a> another one.");
+	die(trr("This entry doesn't exist, please")
+	."<a href='show.php'> ".trr("select")." </a> ".trr("another one"));
 }
 
 if ($_GET["action"] == "show")
@@ -41,7 +42,8 @@ if ($_GET["action"] == "confirm_deletion")
 if ($_GET["action"] == "delete")
 {
 	$recipe->mysqlDelete();
-	echo "Recipe '".$recipe->getTitle()."' has been deleted.\n";
+	echo trr("Recipe")." '".$recipe->getTitle()."' "
+	.trr("has been deleted").".\n";
 	exit();
 }
 
@@ -52,6 +54,7 @@ if (count($_POST) > 0)
 	$recipe->setIngredients($_POST["ingredients"]);
 	$recipe->setInstructions($_POST["instructions"]);
 	$recipe->setTime($_POST["time"]);
+	$recipe->setCategoryByID($_POST["category"]);
 	
 	$recipe->mysqlUpdate();
 	echo $recipe->repr();
@@ -60,19 +63,45 @@ if (count($_POST) > 0)
 ?>
 <form action="edit.php?id=<?php echo $recipe->getID(); ?>&action=show" method=post>
 	<div>
-		<p><?php tr("Title");?>:</p> <input type=text name=title
+		<p><?php tr("Title");?></p> <input type=text name=title
 		value=<?php echo $recipe->getTitle(); ?> />
 	</div>
 	<div>
-		<p><?php tr("Ingredients");?>:</p> <textarea name=ingredients rows=10 cols=40>
+		<p><?php tr("Category");?></p><select name=category>
+			<?php
+				$db = mysqliConnect();
+				$data = $db->query("SELECT * FROM categories");
+				
+				echo "<option value=\"0\">---</option>";
+				
+				while ($row = $data->fetch_assoc())
+				{
+					if ($row["id"] == $recipe->getCategoryID())
+					{
+						$selected = "selected=\"selected\"";
+					}
+					else
+					{
+						$selected = "";
+					}
+					$s = "<option value=\"".$row["id"]."\" $selected>".
+					     $row["name"]."</option>\n";
+					
+					echo $s;
+				}
+			?>
+		</select>
+	</div>
+	<div>
+		<p><?php tr("Ingredients");?></p> <textarea name=ingredients rows=10 cols=40>
 <?php echo $recipe->getIngredients(); ?></textarea>
 	</div>
 	<div>
-		<p><?php tr("Instructions");?>:</p> <textarea name=instructions rows=20 cols=80>
+		<p><?php tr("Instructions");?></p> <textarea name=instructions rows=20 cols=80>
 <?php echo $recipe->getInstructions(); ?></textarea>
 	</div>
 	<div>
-		<p><?php tr("Time required");?>:</p> <input type=text name=time 
+		<p><?php tr("Time required");?></p> <input type=text name=time 
 		value=<?php echo $recipe->getTime(); ?> /> <?php tr("minutes");?>
 	</div>
 	<input type=submit value=<?php tr("Save");?> /> <br />

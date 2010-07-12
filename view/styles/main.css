@@ -54,6 +54,11 @@ html, body
 	font-weight: bold;
 }
 
+.italic
+{
+	font-style: italic;
+}
+
 /* --- Other --------------------------------- */
 div.rounded
 {

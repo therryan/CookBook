@@ -8,6 +8,7 @@ class Recipe
 	private $id;
 	private $title;
 	private $time;
+	private $categoryID;
 	private $ingr;
 	private $instr;
 	
@@ -56,6 +57,7 @@ class Recipe
 			$row = $data->fetch_assoc();
 			$this->setID($row["id"]);
 			$this->setTitle($row["title"]);
+			$this->setCategoryByID($row["category"]);
 			$this->setTime($row["time"]);
 			$this->setIngredients($row["ingredients"]);
 			$this->setInstructions($row["instructions"]);
@@ -69,9 +71,9 @@ class Recipe
 	{
 		$db = mysqliConnect();
 		$db->query("INSERT INTO recipes ".
-		           "(title, time, ingredients, instructions) ".
+		           "(title, time, category, ingredients, instructions) ".
 		           "VALUES ('$this->title', '$this->time', ".
-				   "'$this->ingr', '$this->instr')");
+				   "'$this->categoryID', '$this->ingr', '$this->instr')");
 		$db->close();
 	}
 	
@@ -80,7 +82,8 @@ class Recipe
 		$db = mysqliConnect();
 		$db->query("UPDATE recipes ".
 		           "SET title = '$this->title', ingredients = '$this->ingr', ".
-		           "time = '$this->time', instructions = '$this->instr' ".
+		           "time = '$this->time', instructions = '$this->instr', ".
+		           "category = '$this->categoryID' ".
 		           "WHERE id = $this->id");
 		$db->close();
 	}
@@ -113,10 +116,19 @@ class Recipe
 		{
 			// So that we can cross-reference other recipes
 			// with the syntax: {<ID>|<What we want to be shown>}
-			$val = preg_replace("/\{(\d+)\|([a-z]+)\}/",
+			$val = preg_replace("/\{(\d+)\|([a-zA-Z ]+)\}/",
 			"<a href=show.php?id=$1>$2</a>", $val);
 			
-			$ingr .= "<li>$val</li>\n";
+			// Empty lines (that are 1 char long for some reason (\n?))
+			// shouldn't show the list marker and now they are just empty
+			if (strlen($val) <= 1)
+			{
+				$ingr .= "<br />";
+			}
+			else
+			{
+				$ingr .= "<li>$val</li>\n";
+			}
 		}
 		$ingr .= "</ul>\n";
 		
@@ -139,6 +151,8 @@ class Recipe
 		
 		// The actual code
 		$contents = "<h2>".$this->title."</h2>".
+		
+					"<p class=italic>".$this->getCategoryName()."</p>".
 		
 		            "<p>".$this->time." ".trr("minutes")."</p>".$menu.
 		
@@ -171,6 +185,17 @@ class Recipe
 	public function getID() {return $this->id;}
 	public function getTitle() {return $this->title;}
 	public function getTime() {return $this->time;}
+	public function getCategoryID() {return $this->categoryID;}
+	public function getCategoryName()
+	{
+		$db = mysqliConnect();
+		$query = "SELECT name FROM categories ".
+		         "WHERE id = ".$this->categoryID;
+		$data = $db->query($query);
+		$row = $data->fetch_assoc();
+		return $row["name"];
+	}
+	
 	public function getIngredients() {return $this->ingr;}
 	public function getInstructions() {return $this->instr;}
 	
@@ -178,6 +203,18 @@ class Recipe
 	private function setID($newID) {$this->id = $newID;}
 	public function setTitle($newTitle) {$this->title = $newTitle;}
 	public function setTime($newTime) {$this->time = $newTime;}
+	public function setCategoryByID($newCat) {$this->categoryID = $newCat;}
+	public function setCategoryByName($newCatName)
+	{
+		$db = mysqliConnect();
+		$newCatName = $db->real_escape_string($newCatName);
+		
+		$data = $db->query("SELECT id FROM categories ".
+		                   "WHERE name = '".$newCatName."'");
+		$row = $data->fetch_assoc();
+		$this->setCategoryByID($row["id"]);
+	}
+	
 	public function setIngredients($newIngr) {$this->ingr = $newIngr;}
 	public function setInstructions($newInstr) {$this->instr = $newInstr;}
 }

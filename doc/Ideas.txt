@@ -1,12 +1,9 @@
 SUGGESTIONS:
 	- A brief introduction to each recipe, shown on the titleAsLink
-	- Printing (Better styling etc.)
 	- Categories
 	- Installation, MySQL setup etc.
 	- Favorites
 	- Config
-	- Log (MySQL wrapper class)
-	- Translations
 
 HOMEPAGE:
 	- A dashboard of recent recipes, favorites etc.
