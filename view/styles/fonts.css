@@ -1,0 +1,82 @@
+/* A font by Jos Buivenga (exljbris) -> http://www.exljbris.nl */
+
+@font-face 
+{
+	font-family: "MuseoSans 500";
+	src: url("../fonts/museo_sans500.otf");
+}
+
+@font-face
+{
+	font-family: "MuseoSans 500";
+	src: url("../fonts/museo_sans500-italic.otf");
+	font-style: italic;
+}
+
+@font-face
+{
+	font-family: "MuseoSlab 500";
+	src: url("../fonts/museo_slab500.otf");
+}
+
+@font-face
+{
+	font-family: "MuseoSlab 500";
+	src: url("../fonts/museo_slab500-italic.otf");
+	font-style: italic;
+}
+
+@font-face
+{
+	font-family: "Museo 300";
+	src: url("../fonts/museo300.otf");
+}
+
+@font-face
+{
+	font-family: "Museo 500";
+	src: url("../fonts/museo500.otf");
+}
+
+@font-face
+{
+	font-family: "Museo 700";
+	src: url("../fonts/museo700.otf");
+}
+
+@font-face
+{
+	font-family: "Oblik";
+	src: url("../fonts/oblik-bold.otf");
+}
+
+@font-face
+{
+	font-family: "Otari";
+	src: url("../fonts/otari-bold.otf");
+}
+
+@font-face
+{
+	font-family: "Mentone";
+	src: url("../fonts/mentone_semibol.otf");
+}
+
+@font-face
+{
+	font-family: "Mentone";
+	src: url("../fonts/mentone_semibol-italic.otf");
+	font-style: italic;
+}
+
+@font-face
+{
+	font-family: "Anivers";
+	src: url("../fonts/anivers_regular.otf");
+}
+
+@font-face
+{
+	font-family: "Calluna";
+	src: url("../fonts/calluna_regular.otf");
+}

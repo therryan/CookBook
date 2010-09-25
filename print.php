@@ -1,4 +1,5 @@
 <?php
+require_once("model/recipe.class.php");
 
 if (count($_GET) == 0 || !is_numeric($_GET["id"]))
 {

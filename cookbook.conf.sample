@@ -1,0 +1,16 @@
+<?php
+// This is a sample configuration file for cookbook
+
+// Whether the program should run in debug (developer) mode. If set to FALSE, it doesn't show errors (as many, anyway).
+$Debug = FALSE;
+
+// The language that should be used in the user interface
+$Language = "english";
+
+// MySQL Options
+$Address = "localhost";
+$Username = "root";
+$Password = "";
+$Database = "cookbook";
+
+?>

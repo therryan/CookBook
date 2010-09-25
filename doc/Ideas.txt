@@ -3,7 +3,7 @@ SUGGESTIONS:
 	- Categories
 	- Installation, MySQL setup etc.
 	- Favorites
-	- Config
+	- Log system (for errors etc. mainly)
 
 HOMEPAGE:
 	- A dashboard of recent recipes, favorites etc.

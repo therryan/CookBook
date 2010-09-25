@@ -7,5 +7,6 @@
 		<li><a href="show.php"><?php tr("Show");?></a></li>
 		<li><a href="search.php"><?php tr("Search");?></a></li>
 		<li><a href="categories.php"><?php tr("Categories");?></a></li>
+		<!--<li><a href="settings.php"><?php tr("Settings");?></a></li>-->
 	</ul>
 </div>

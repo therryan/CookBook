@@ -1,6 +1,5 @@
-<?php require_once("view/inc/head.php");?>
+<?php require_once("view/inc/head.php");
 
-<?php
 require_once("model/recipe.class.php");
 require_once("model/funcs.php");
 

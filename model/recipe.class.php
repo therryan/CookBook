@@ -152,7 +152,8 @@ class Recipe
 		// The actual code
 		$contents = "<h2>".$this->title."</h2>".
 		
-					"<p class=italic>".$this->getCategoryName()."</p>".
+					"<p class=italic id=categoryName>"
+					    .$this->getCategoryName()."</p>".
 		
 		            "<p>".$this->time." ".trr("minutes")."</p>".$menu.
 		
