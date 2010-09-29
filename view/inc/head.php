@@ -1,3 +1,7 @@
+<?php
+require_once("view/tr/tr.php");
+checkconf(); // This is here so that if the conf file is missing, it gets caught here, before any CSS etc. gets applied
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,4 +13,10 @@
 
 <body>
 	<div id="container">
-<?php require("header.php");?>
+<?php
+// If one doesn't want the header to show up, one can just declare '$loadheader' before including this file and the header won't show up
+if (!isset($loadHeader))
+{
+	require("header.php");
+}
+?>

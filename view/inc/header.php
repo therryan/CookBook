@@ -1,5 +1,3 @@
-<?php require_once("view/tr/tr.php");?>
-
 <div id=header class=navbar>
 	<ul class=hlist>
 		<li><a href="index.php"><?php tr("Homepage");?></a></li>

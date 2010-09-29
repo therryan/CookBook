@@ -1,5 +1,5 @@
 <?php
-include($SERVER["DOCUMENT_ROOT"]."model/funcs.php");
+require_once("model/funcs.php");
 
 function tr($trString, $justReturn = FALSE)
 {

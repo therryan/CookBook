@@ -22,7 +22,8 @@ $_POST = array();
 ?>
 <form action="add.php" method=post>
 	<div>
-		<p><?php tr("Title");?>:</p> <input type=text name=title />
+		<p><?php tr("Title");?>:</p> <input type=text name=title
+		    value=<?php echo $_GET["title"]; ?> />
 	</div>
 	<div>
 		<p><?php tr("Ingredients");?>:</p> <textarea name=ingredients rows=10 cols=40></textarea>

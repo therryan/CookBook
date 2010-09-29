@@ -11,12 +11,14 @@ $lang = array(
 	
 	/* add.php */
 	"Title"         => "Nimi",
+	    "Title for the recipe" => "Otsikko reseptille",
 	"Category"      => "Kategoria",
 	"Ingredients"   => "Aineet",
 	"Instructions"  => "Ohjeet",
 	"Time required" => "Aikaa tarvitaan",
 	"minutes"       => "minuuttia",
 	"Save"          => "Tallenna",
+	"Create new"	=> "Luo uusi",
 	
 	/* show.php */
 	"This entry doesn't exist, please select another one." =>

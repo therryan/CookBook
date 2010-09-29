@@ -18,23 +18,6 @@ function mysqliConnect()
 	return $db;
 }
 
-// The conf-functions form a front-end for editing and easily looking up settings in the program itself
-function getconf($directive)
-{
-	require("cookbook.conf");
-	
-	// If the given parameter (e.g. "test") represents a variable is the conf file ($test), then return the value of that directive
-	if (isset($$directive))
-	{
-		return $$directive;
-	}
-	else {die("Given directive $$directive does not exist. Please contact the system administrator.");}
-}
-
-function setconf($directive, $value)
-{
-	require_once("cookbook.conf");
-}
-
+require_once("conf.php");
 
 ?>
