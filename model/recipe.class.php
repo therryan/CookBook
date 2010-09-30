@@ -13,7 +13,7 @@ class Recipe
 	private $instr;
 	
 	/* --- Magic Methods --------------------- */
-	public function __construct($requestedID)
+	public function __construct($requestedID = "")
 	{
 		if (is_numeric($requestedID))
 		{
@@ -47,11 +47,9 @@ class Recipe
 	/* --- Methods --------------------------- */
 	public function getRecipeByID($requestedID)
 	{
-		
 		if (is_numeric($requestedID))
 		{
 			$db = mysqliConnect();
-			
 			$data = $db->query("SELECT * FROM recipes WHERE id = $requestedID");
 
 			$row = $data->fetch_assoc();
@@ -64,6 +62,15 @@ class Recipe
 		
 			$db->close();
 		}
+	}
+	
+	// Get the recipe by name, rather than by ID, presuming all titles are unique
+	public function getRecipeByTitle($title)
+	{
+		$db = mysqliConnect();
+		$data = $db->query("SELECT id FROM recipes WHERE title = '$title'");
+		$row = $data->fetch_assoc();
+		$this->getRecipeByID($row["id"]);
 	}
 	
 	/* --- Database methods ------------------ */

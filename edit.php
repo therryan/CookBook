@@ -1,4 +1,3 @@
-<?php require_once("view/inc/head.php");?>
 <?php
 if (!(count($_GET) > 0) || !is_numeric($_GET["id"]))
 {
@@ -8,6 +7,12 @@ if (!(count($_GET) > 0) || !is_numeric($_GET["id"]))
 	// So that nothing else gets executed
 	exit();
 }
+
+if ($_GET["action"] == "show")
+{
+	header("Location: show.php?id=".$_GET["id"]);
+}
+
 // This has to be moved here because of header()
 require_once("view/inc/head.php");
 require_once("model/recipe.class.php");
@@ -19,11 +24,6 @@ if ($recipe->isEmpty())
 {
 	die(trr("This entry doesn't exist, please")
 	."<a href='show.php'> ".trr("select")." </a> ".trr("another one"));
-}
-
-if ($_GET["action"] == "show")
-{
-	header("Location: show.php?id=".$recipe->getID());
 }
 
 if ($_GET["action"] == "confirm_deletion")
@@ -72,8 +72,10 @@ if (count($_POST) > 0)
 				$db = mysqliConnect();
 				$data = $db->query("SELECT * FROM categories");
 				
+				// Set the default to --- "None"
 				echo "<option value=\"0\">---</option>";
 				
+				// Populate the 'select' with the categories from the database
 				while ($row = $data->fetch_assoc())
 				{
 					if ($row["id"] == $recipe->getCategoryID())
