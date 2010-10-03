@@ -11,6 +11,7 @@ class Recipe
 	private $categoryID;
 	private $ingr;
 	private $instr;
+	private $fav;
 	
 	/* --- Magic Methods --------------------- */
 	public function __construct($requestedID = "")
@@ -59,7 +60,8 @@ class Recipe
 			$this->setTime($row["time"]);
 			$this->setIngredients($row["ingredients"]);
 			$this->setInstructions($row["instructions"]);
-		
+			$this->setFavorite($row["favorite"]);
+
 			$db->close();
 		}
 	}
@@ -78,9 +80,10 @@ class Recipe
 	{
 		$db = mysqliConnect();
 		$db->query("INSERT INTO recipes ".
-		           "(title, time, category, ingredients, instructions) ".
+		           "(title, time, category, ingredients, instructions, favorite) ".
 		           "VALUES ('$this->title', '$this->time', ".
-				   "'$this->categoryID', '$this->ingr', '$this->instr')");
+				   "'$this->categoryID', '$this->ingr', '$this->instr', ".
+				   "'$this->fav)");
 		$db->close();
 	}
 	
@@ -90,7 +93,7 @@ class Recipe
 		$db->query("UPDATE recipes ".
 		           "SET title = '$this->title', ingredients = '$this->ingr', ".
 		           "time = '$this->time', instructions = '$this->instr', ".
-		           "category = '$this->categoryID' ".
+		           "category = '$this->categoryID', favorite = '$this->fav' ".
 		           "WHERE id = $this->id");
 		$db->close();
 	}
@@ -156,13 +159,25 @@ class Recipe
 			$menu = "";
 		}
 		
+		// Add the 'favorite'-indicator
+		if ($this->fav == TRUE)
+		{
+			$fav = "<p>".trr("Favorite")."!</p>";
+		}
+		else
+		{
+			$fav = "";
+		}
+		
 		// The actual code
 		$contents = "<h2>".$this->title."</h2>".
 		
 					"<p class=italic id=categoryName>"
 					    .$this->getCategoryName()."</p>".
 		
-		            "<p>".$this->time." ".trr("minutes")."</p>".$menu.
+		            "<p>".$this->time." ".trr("minutes")."</p>".
+					$menu.
+					$fav.
 		
 		            "<div class=rounded><h4>".trr("Ingredients")."</h4> "
 					    .$ingr."</div>".
@@ -192,7 +207,10 @@ class Recipe
 	/* --- Getters --------------------------- */
 	public function getID() {return $this->id;}
 	public function getTitle() {return $this->title;}
-	public function getTime() {return $this->time;}
+	public function getTime() {return $this->time;}	
+	public function getIngredients() {return $this->ingr;}
+	public function getInstructions() {return $this->instr;}
+	public function isFavorite() {return $this->fav;}
 	public function getCategoryID() {return $this->categoryID;}
 	public function getCategoryName()
 	{
@@ -204,13 +222,12 @@ class Recipe
 		return $row["name"];
 	}
 	
-	public function getIngredients() {return $this->ingr;}
-	public function getInstructions() {return $this->instr;}
-	
 	/* --- Setters --------------------------- */
 	private function setID($newID) {$this->id = $newID;}
 	public function setTitle($newTitle) {$this->title = $newTitle;}
-	public function setTime($newTime) {$this->time = $newTime;}
+	public function setTime($newTime) {$this->time = $newTime;}	
+	public function setIngredients($newIngr) {$this->ingr = $newIngr;}
+	public function setInstructions($newInstr) {$this->instr = $newInstr;}
 	public function setCategoryByID($newCat) {$this->categoryID = $newCat;}
 	public function setCategoryByName($newCatName)
 	{
@@ -223,7 +240,17 @@ class Recipe
 		$this->setCategoryByID($row["id"]);
 	}
 	
-	public function setIngredients($newIngr) {$this->ingr = $newIngr;}
-	public function setInstructions($newInstr) {$this->instr = $newInstr;}
+	public function setFavorite($newFav)
+	{
+		$newFav = intval($newFav);
+		if (is_numeric($newFav))
+		{
+			$newFav = (boolean)$newFav;
+		}
+		if (is_bool($newFav))
+		{
+			$this->fav = $newFav;
+		}
+	}
 }
 ?>

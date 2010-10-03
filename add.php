@@ -1,10 +1,9 @@
 <?php
 require("model/recipe.class.php");
 
-if ($_GET["action"] == "show")
+// count() is used, because when the user enters 'add.php' normally, $_GET is empty, which makes PHP unhappy
+if (count($_GET) > 0 && $_GET["action"] == "show")
 {
-	//var_dump($_POST);
-	
 	$recipe = new Recipe();
 	$recipe->getRecipeByTitle($_POST["title"]);
 	header("Location: show.php?id=".$recipe->getID());
@@ -36,7 +35,7 @@ $_POST = array();
 		<p><?php tr("Title");?>:</p> <input type=text name=title
   <?php // If the user got to add.php from index.php, pre-populate the title
         // The extra quotes are there to make sure that multi-word titles are displayed correctly
-  if (strlen($_GET["title"]) > 0) {
+  if (count($_GET) > 0 && strlen($_GET["title"]) > 0) {
       echo "value=\"".$_GET["title"]."\""; } ?> />
 	</div>
 	<p><?php tr("Category");?>:</p>

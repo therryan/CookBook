@@ -42,6 +42,7 @@ $lang = array(
 	"T&auml;t&auml; ohjetta ei ole olemassa,",
 	"select"           => "valitse",
 	"another one"      => "joku toinen",
+	"Favorite"		   => "Suosikki",
 	
 	/* categories.php */
 	"Category name" => "Kategorian nimi",
