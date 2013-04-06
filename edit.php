@@ -55,17 +55,31 @@ if (count($_POST) > 0)
 	$recipe->setInstructions($_POST["instructions"]);
 	$recipe->setTime($_POST["time"]);
 	$recipe->setCategoryByID($_POST["category"]);
-	
+	$recipe->setFavorite($_POST["favorite"]);
+		
 	$recipe->mysqlUpdate();
-	echo $recipe->repr();
 }
 
 ?>
 <form action="edit.php?id=<?php echo $recipe->getID(); ?>&action=show" method=post>
+	<!-- Title -->
 	<div>
 		<p><?php tr("Title");?></p> <input type=text name=title
-		value=<?php echo $recipe->getTitle(); ?> />
+		value="<?php echo $recipe->getTitle(); ?>" />
 	</div>
+	
+	<!-- Favorite -->
+	<div>
+		<input type=checkbox name=favorite value=1
+		<?php
+		    if ($recipe->isFavorite())
+				{
+					echo "checked";
+				}
+		?> /> <?php tr("Favorite");?>
+	</div>
+	
+	<!-- Category -->
 	<div>
 		<p><?php tr("Category");?></p><select name=category>
 			<?php
@@ -94,18 +108,26 @@ if (count($_POST) > 0)
 			?>
 		</select>
 	</div>
+	
+	<!-- Ingredients -->
 	<div>
 		<p><?php tr("Ingredients");?></p> <textarea name=ingredients rows=10 cols=40>
 <?php echo $recipe->getIngredients(); ?></textarea>
 	</div>
+	
+	<!-- Instructions -->
 	<div>
 		<p><?php tr("Instructions");?></p> <textarea name=instructions rows=20 cols=80>
 <?php echo $recipe->getInstructions(); ?></textarea>
 	</div>
+	
+	<!-- Time required -->
 	<div>
 		<p><?php tr("Time required");?></p> <input type=text name=time 
 		value=<?php echo $recipe->getTime(); ?> /> <?php tr("minutes");?>
 	</div>
+	
+	<!-- Submit -->
 	<input type=submit value=<?php tr("Save");?> /> <br />
 </form>
 </body>

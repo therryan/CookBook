@@ -1,7 +1,5 @@
-<?php require("view/inc/head.php");?>
-
 <?php
-require("model/funcs.php");
+require("view/inc/head.php");
 
 if ($_GET["action"] == "add")
 {

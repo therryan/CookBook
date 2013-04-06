@@ -3,6 +3,7 @@
 require_once("model/recipe.class.php");
 require_once("model/funcs.php");
 
+// Show a specific recipe
 if (count($_GET) > 0 && array_key_exists("id", $_GET))
 {
 	$recipe = new Recipe($_GET["id"]);
@@ -16,6 +17,7 @@ if (count($_GET) > 0 && array_key_exists("id", $_GET))
 		echo $recipe->composeHTML();
 	}
 }
+// Show the names of all the recipes as links
 else
 {
 
