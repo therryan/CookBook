@@ -50,62 +50,64 @@ class Recipe
 	{
 		if (is_numeric($requestedID))
 		{
-			$db = mysqliConnect();
-			$data = $db->query("SELECT * FROM recipes WHERE id = $requestedID");
-
-			$row = $data->fetch_assoc();
+			$db = DBConnect();
+			$stmt = $db->query("SELECT * FROM recipes WHERE id = $requestedID");
+						
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
 			$this->setID($row["id"]);
 			$this->setTitle($row["title"]);
-			$this->setCategoryByID($row["category"]);
+			$this->setCategoryByID($row["categoryID"]);
 			$this->setTime($row["time"]);
 			$this->setIngredients($row["ingredients"]);
 			$this->setInstructions($row["instructions"]);
 			$this->setFavorite($row["favorite"]);
 
-			$db->close();
+			$db = null;
 		}
 	}
 	
 	// Get the recipe by name, rather than by ID, presuming all titles are unique
 	public function getRecipeByTitle($title)
 	{
-		$db = mysqliConnect();
-		$data = $db->query("SELECT id FROM recipes WHERE title = '$title'");
-		$row = $data->fetch_assoc();
-		$this->getRecipeByID($row["id"]);
+		$db = DBConnect();
+		$stmt = $db->query("SELECT id FROM recipes WHERE title = '$title'");
+		$id = $stmt->fetchColumn();	// Fetches the first column of the next row
+		$this->getRecipeByID($id);
 	}
 	
 	/* --- Database methods ------------------ */
-	public function mysqlInsert()
+	public function DBInsert()
 	{
-		$db = mysqliConnect();
+		//OLD
+		$db = DBConnect();
 		$db->query("INSERT INTO recipes ".
-		           "(title, time, category, ingredients, instructions, favorite) ".
+		           "(title, time, categoryID, ingredients, instructions, favorite) ".
 		           "VALUES ('$this->title', '$this->time', ".
 				   "'$this->categoryID', '$this->ingr', '$this->instr', ".
 				   "'$this->fav')");
-		$db->close();
+		$db = null;
 	}
 	
-	public function mysqlUpdate()
+	public function DBUpdate()
 	{
-		$db = mysqliConnect();
+		//OLD
+		$db = DBConnect();
 		$db->query("UPDATE recipes ".
 		           "SET title = '$this->title', ingredients = '$this->ingr', ".
 		           "time = '$this->time', instructions = '$this->instr', ".
-		           "category = '$this->categoryID', favorite = '$this->fav' ".
+		           "categoryID = '$this->categoryID', favorite = '$this->fav' ".
 		           "WHERE id = $this->id");
-		$db->close();
+		$db = null;
 	}
 	
-	public function mysqlDelete()
+	public function DBDelete()
 	{
 		if (!$this->isEmpty())
 		{
-			$db = mysqliConnect();
+			$db = DBConnect();
 			$db->query("DELETE FROM recipes ".
 			           "WHERE id = $this->id");
-			$db->close();
+			$db = null;
 		}
 	}	
 
@@ -195,7 +197,7 @@ class Recipe
 	}
 	
 	/* --- Status Methods -------------------- */
-	// We only need to check the ID, because it is set when reading from MySQL
+	// We only need to check the ID, because it is set when reading from the database
 	public function isEmpty()
 	{
 		if (is_null($this->id))
@@ -214,12 +216,13 @@ class Recipe
 	public function getCategoryID() {return $this->categoryID;}
 	public function getCategoryName()
 	{
-		$db = mysqliConnect();
-		$query = "SELECT name FROM categories ".
-		         "WHERE id = ".$this->categoryID;
-		$data = $db->query($query);
-		$row = $data->fetch_assoc();
+		$db = DBConnect();
+		$stmt = $db->query(	"SELECT name FROM categories ".
+		                    "WHERE id = ".$this->categoryID);
+		$row = $stmt->fetch();
+		$db = null;
 		return $row["name"];
+		
 	}
 	
 	/* --- Setters --------------------------- */
@@ -231,7 +234,8 @@ class Recipe
 	public function setCategoryByID($newCat) {$this->categoryID = $newCat;}
 	public function setCategoryByName($newCatName)
 	{
-		$db = mysqliConnect();
+		//OLD
+		$db = DBConnect();
 		$newCatName = $db->real_escape_string($newCatName);
 		
 		$data = $db->query("SELECT id FROM categories ".

@@ -4,6 +4,8 @@ SUGGESTIONS:
 	- Installation, MySQL setup etc.
 	- Favorites
 	- Log system (for errors etc. mainly)
+	- Cooking mode: Slideshow, checklist...?
+	- A simple markup language and JS-based editor (suitelib!)
 
 HOMEPAGE:
 	- A dashboard of recent recipes, favorites etc.

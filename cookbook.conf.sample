@@ -7,10 +7,10 @@ $Debug = FALSE;
 // The language that should be used in the user interface
 $Language = "english";
 
-// MySQL Options
-$Address = "localhost";
-$Username = "root";
+// Database options
+$DBType = "sqlite"
+$Address = "data.db";
+$Username = "";
 $Password = "";
-$Database = "cookbook";
-
+$Database = "";
 ?>

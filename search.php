@@ -1,68 +1,65 @@
-<?php require_once("view/inc/head.php");?>
+<?php require_once('view/inc/head.php');?>
 
 <?php
-require_once("model/recipe.class.php");
-require_once("model/funcs.php");
+require_once('model/recipe.class.php');
+require_once('model/funcs.php');
 
-if (count($_GET) > 0)
-{
-	$db = mysqliConnect();
+if (count($_GET) > 0) {
+	$db = DBConnect();	
 	
-	if (!empty($_GET["title"]))
-	{
-		$query = "SELECT id FROM recipes WHERE title LIKE '%"
-		.$db->real_escape_string($_GET["title"])."%'";
+	if (!empty($_GET['title'])) {
+		// The % operator can't be directly put in the statement
+		$stmt = $db->prepare('SELECT id FROM recipes WHERE title LIKE :title');
+		$stmt->execute(array('title' => '%'.$_GET['title'].'%'));
 	}
-	elseif (!empty($_GET["all"]))
-	{
-		$escapedString = $db->real_escape_string($_GET["all"]);
-		$query = "SELECT id FROM recipes WHERE title LIKE '%"
-		.$escapedString."%' OR instructions LIKE '%"
-		.$escapedString."%' OR ingredients LIKE '%"
-		.$escapedString."%'";
-	}
-	elseif (!empty($_GET["ingredients"]))
-	{
-		$query = "SELECT id FROM recipes WHERE ingredients LIKE '%"
-		.$db->real_escape_string($_GET["ingredients"])."%'";
-	}
+	elseif (!empty($_GET['all'])) {
+		$searchString = '%'.$_GET['all'].'%';
 		
-	// So we don't execute the query if none of the above were true
-	if (!empty($query))
-	{
-		$data = $db->query($query);
+		// Note! There were some problems with using the :all several times,
+		// but everything seems to be working nonetheless.
+		$stmt = $db->prepare('SELECT id FROM recipes WHERE title LIKE :all
+							  OR instructions LIKE :all
+							  OR ingredients LIKE :all');
+		$stmt->execute(array('all' => $searchString));
+	}
+	elseif (!empty($_GET['ingredients'])) {
+		$stmt = $db->prepare('SELECT id FROM recipes WHERE ingredients LIKE :ingredients');
+		$stmt->execute(array('ingredients' => '%'.$_GET['ingredients'].'%'));
 	}
 	
-	while ($row = $data->fetch_assoc())
-	{
-		$recipe = new Recipe($row["id"]);
-		echo $recipe->titleAsLink();
-		
-		unset($recipe);
+	// GET contains some unknown value, abort
+	else {
+		sLog('Unknown value in GET', 'error');
 	}
 	
-	if ($data->num_rows > 0)
-	{
-		echo "<p><a href=search.php>".trr("Search again")."</a></p>\n";
+	$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+	// If we found something, display the results
+	if (count($data) > 0) {
+		foreach ($data as $row) {
+			$recipe = new Recipe($row['id']);
+			echo $recipe->titleAsLink();
+			unset($recipe);
+		}
+		echo '<p><a href=search.php>'.trr('Search again').'</a></p>';
 		// If we've found something, let's not show the forms
 		exit();
 	}
-	else
-	{
-		echo "<p>".trr("Your search query didn't match anything. Please try again.")."</p>\n";
+	else {
+		echo '<p>'.trr('Your search query didn\'t match anything. Please try again.').'</p>\n';
 	}
 }
 ?>
-<form action="search.php" method=get>
+<form action='search.php' method=get>
 	<div>
-		<p><?php tr("Search everything");?>:</p><input type=text name=all>
+		<p><?php tr('Search everything');?>:</p><input type=text name=all>
 	</div>
 	<div>
-		<p><?php tr("Search titles");?>:</p><input type=text name=title>
+		<p><?php tr('Search titles');?>:</p><input type=text name=title>
 	</div>
 	<div>
-		<p><?php tr("Search ingredients");?>:</p><input type=text name=ingredients>
+		<p><?php tr('Search ingredients');?>:</p><input type=text name=ingredients>
 	</div>
-	<input type=submit value=<?php tr("Search");?>>
+	<input type=submit value=<?php tr('Search');?>>
 </body>
 </html>

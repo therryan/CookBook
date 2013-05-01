@@ -21,18 +21,18 @@ if (count($_GET) > 0 && array_key_exists("id", $_GET))
 else
 {
 
-	$db = mysqliConnect();
-	$data = $db->query("SELECT id FROM recipes");
+	$db = DBConnect();
+	$stmt = $db->query("SELECT id FROM recipes");
+	$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
-	while ($row = $data->fetch_assoc())
+	foreach ($data as $row)
 	{
 		$recipe = new Recipe($row["id"]);
 		echo $recipe->titleAsLink();
-		
 		unset($recipe);
 	}
 
-	$db->close();
+	$db = null;
 }
 ?>
 
