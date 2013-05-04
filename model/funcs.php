@@ -1,5 +1,6 @@
 <?php
-require_once("../suitelib/suitephp.php");
+// For some reason relative paths don't always work, so getcwd is used instead
+require_once(getcwd()."/suitelib/suitephp.php");
 require_once("conf.php");
 
 /* Connects to the database with values read from the conf file */

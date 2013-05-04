@@ -8,7 +8,7 @@ $Debug = FALSE;
 $Language = "english";
 
 // Database options
-$DBType = "sqlite"
+$DBType = "sqlite";
 $Address = "data.db";
 $Username = "";
 $Password = "";

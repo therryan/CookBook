@@ -6,6 +6,8 @@ SUGGESTIONS:
 	- Log system (for errors etc. mainly)
 	- Cooking mode: Slideshow, checklist...?
 	- A simple markup language and JS-based editor (suitelib!)
+	- Mobile interface
+	- HTML5 Local Storage for add.php
 
 HOMEPAGE:
 	- A dashboard of recent recipes, favorites etc.

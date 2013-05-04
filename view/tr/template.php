@@ -15,6 +15,7 @@ $lang = array(
 	"Instructions"  => "",
 	"Time required" => "",
 	"minutes"       => "",
+	"Empty"			=> "",
 	"Save"          => "",
 	
 	/* show.php */

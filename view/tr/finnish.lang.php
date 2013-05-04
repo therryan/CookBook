@@ -17,6 +17,7 @@ $lang = array(
 	"Instructions"  => "Ohjeet",
 	"Time required" => "Aikaa tarvitaan",
 	"minutes"       => "minuuttia",
+	"Empty"			=> "Tyhjennä",
 	"Save"          => "Tallenna",
 	"Create new"	=> "Luo uusi",
 	
