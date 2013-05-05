@@ -19,6 +19,7 @@ $lang = array(
 	"Save"          => "",
 	
 	/* show.php */
+	"Portions:"		=> "",
 	"This entry doesn't exist, please select another one." =>
 	"",
 	

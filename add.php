@@ -2,9 +2,8 @@
 require('model/recipe.class.php');
 
 // This has to be before the redirect
-/* After the user has clicked on 'Submit', insert the new recipe to the database */
-if (count($_POST) > 0)
-{
+/* After the user has clicked on 'Submit', insert the new recipe into the database */
+if (count($_POST) > 0) {
 	$recipe = new Recipe();
 	$recipe->setTitle($_POST['title']);
 	$recipe->setIngredients($_POST['ingredients']);
@@ -16,8 +15,7 @@ if (count($_POST) > 0)
 
 // count() is used, because when the user enters 'add.php' normally, $_GET is empty, which makes PHP unhappy
 /* After the recipe has been added, redirect the user to the new recipe's page */
-if (count($_GET) > 0 && $_GET['action'] == 'show')
-{
+if (count($_GET) > 0 && $_GET['action'] == 'show') {
 	$recipe = new Recipe();
 	$recipe->getRecipeByTitle($_POST['title']);			// Titles have to be unique
 	header('Location: show.php?id='.$recipe->getID());
@@ -45,11 +43,10 @@ $_POST = array();
 			$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			
 			// Set the default to --- 'None'
-			echo '<option value="0"></option>\n';
+			echo '<option value="0"></option>';
 			
 			// Populate the 'select' with the categories from the database
-			foreach ($data as $row)
-			{				
+			foreach ($data as $row) {				
 				echo '<option value="'.$row['id'].'">'.
 				     $row['name']."</option>\n\r";
 			}
@@ -99,6 +96,7 @@ $(document).ready(function() {
 	$('#emptyButton').click(function() {
 		// type=text so that the buttons aren't emptied
 		$('form').find('textarea, input[type*="text"], select').val('');
+		$('#category').val('0');
 	});
 });
 

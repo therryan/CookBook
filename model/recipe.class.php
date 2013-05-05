@@ -12,6 +12,7 @@ class Recipe
 	private $ingr;
 	private $instr;
 	private $fav;
+	private $portions;
 	
 	/* --- Magic Methods --------------------- */
 	public function __construct($requestedID = "")
@@ -48,19 +49,19 @@ class Recipe
 	/* --- Methods --------------------------- */
 	public function getRecipeByID($requestedID)
 	{
-		if (is_numeric($requestedID))
-		{
+		if (is_numeric($requestedID)) {
 			$db = DBConnect();
 			$stmt = $db->query("SELECT * FROM recipes WHERE id = $requestedID");
 						
 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
-			$this->setID($row["id"]);
-			$this->setTitle($row["title"]);
-			$this->setCategoryByID($row["categoryID"]);
-			$this->setTime($row["time"]);
-			$this->setIngredients($row["ingredients"]);
-			$this->setInstructions($row["instructions"]);
-			$this->setFavorite($row["favorite"]);
+			$this->setID($row['id']);
+			$this->setTitle($row['title']);
+			$this->setCategoryByID($row['categoryID']);
+			$this->setTime($row['time']);
+			$this->setIngredients($row['ingredients']);
+			$this->setInstructions($row['instructions']);
+			$this->setFavorite($row['favorite']);
+			$this->setPortions($row['portions']);
 
 			$db = null;
 		}
@@ -114,18 +115,15 @@ class Recipe
 	/* --- Web-related methods -------------- */	
 	public function composeHTML($withLinks = TRUE)
 	{
-		// Instructions
-		$instr = "<ol>\n";
-		foreach (explode("\n", $this->instr) as $val)
-		{
-			$instr .= "<li>$val</li>\n";
-		}
-		$instr .= "</ol>\n";
+		// Portion slider
+		$portionSlider = '<div id="slider" style="width:100px"></div>'.
+						 '<p><label for="portions">'.trr("Portions:").'</label>'.
+						 '<input type="text" id="portions" style="width:20px; margin-left:10px"'.
+						 'value="'.$this->portions.'"/></p>';
 		
 		// Ingredients
-		$ingr = "<ul>\n";
-		foreach (explode("\n", $this->ingr) as $val)
-		{
+		$ingr = "<ul id=\"ingredientList\">\n";
+		foreach (explode("\n", $this->ingr) as $val) {
 			// So that we can cross-reference other recipes
 			// with the syntax: {<ID>|<What we want to be shown>}
 			$val = preg_replace("/\{(\d+)\|([a-zA-Z ]+)\}/",
@@ -133,20 +131,25 @@ class Recipe
 			
 			// Empty lines (that are 1 char long for some reason (\n?))
 			// shouldn't show the list marker and now they are just empty
-			if (strlen($val) <= 1)
-			{
+			if (strlen($val) <= 1) {
 				$ingr .= "<br />";
 			}
-			else
-			{
-				$ingr .= "<li>$val</li>\n";
+			else {
+				$ingr .= "\t<li>$val</li>\n";
 			}
 		}
 		$ingr .= "</ul>\n";
 		
+		// Instructions
+		$instr = "<ol>\n";
+		foreach (explode("\n", $this->instr) as $val) {
+			$instr .= "\t<li>$val</li>\n";
+		}
+		$instr .= "</ol>\n";
+	
+		
 		// The menu
-		if ($withLinks)
-		{
+		if ($withLinks) {
 			$menu = "<ul class=hlist style=\"float:right;\">";
 			$menu .= "<li><a href='edit.php?id=".$this->getID()
 			    ."'>".trr("Edit")."</a></li>\n";
@@ -156,36 +159,35 @@ class Recipe
 			    ."'>".trr("Print")."</a></li>\n";
 			$menu .= "</ul>";
 		}
-		else
-		{
+		else {
 			$menu = "";
 		}
 		
 		// Add the 'favorite'-indicator
-		if ($this->fav == TRUE)
-		{
+		if ($this->fav == TRUE) {
 			$fav = "<p>".trr("Favorite")."!</p>";
 		}
-		else
-		{
+		else {
 			$fav = "";
 		}
 		
 		// The actual code
-		$contents = "<h2>".$this->title."</h2>".
+		$contents = '<h2 id="title">'.$this->title.'</h2>'.
 		
-					"<p class=italic id=categoryName>"
-					    .$this->getCategoryName()."</p>".
+					$portionSlider.
 		
-		            "<p>".$this->time." ".trr("minutes")."</p>".
+					'<p class=italic id=categoryName>'
+					    .$this->getCategoryName().'</p>'.
+		
+		            '<p>'.$this->time.' '.trr('minutes').'</p>'.
 					$menu.
 					$fav.
 		
-		            "<div class=rounded><h4>".trr("Ingredients")."</h4> "
-					    .$ingr."</div>".
+		            '<div class=rounded><h4>'.trr('Ingredients').'</h4> '
+					    .$ingr.'</div>'.
 					
-		            "<div class=rounded><h4>".trr("Instructions")."</h4>"
-		                .$instr."</div>";
+		            '<div class=rounded><h4>'.trr('Instructions').'</h4>'
+		                .$instr.'</div>';
 		
 		return $contents;
 	}
@@ -200,8 +202,7 @@ class Recipe
 	// We only need to check the ID, because it is set when reading from the database
 	public function isEmpty()
 	{
-		if (is_null($this->id))
-		{
+		if (is_null($this->id)) {
 			return true;
 		}
 	}
@@ -213,6 +214,7 @@ class Recipe
 	public function getIngredients() {return $this->ingr;}
 	public function getInstructions() {return $this->instr;}
 	public function isFavorite() {return $this->fav;}
+	public function getPortions() {return $this->portions;}
 	public function getCategoryID() {return $this->categoryID;}
 	public function getCategoryName()
 	{
@@ -231,6 +233,7 @@ class Recipe
 	public function setTime($newTime) {$this->time = $newTime;}	
 	public function setIngredients($newIngr) {$this->ingr = $newIngr;}
 	public function setInstructions($newInstr) {$this->instr = $newInstr;}
+	public function setPortions($newPortions) {$this->portions = $newPortions;}
 	public function setCategoryByID($newCat) {$this->categoryID = $newCat;}
 	public function setCategoryByName($newCatName)
 	{

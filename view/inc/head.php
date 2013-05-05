@@ -9,7 +9,9 @@ getconf('Username'); // This is here so that if the conf file is missing, it get
 	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 	<title>Cookbook</title>
 	<link rel='stylesheet' type='text/css' href='view/styles/main.css'>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	<script type='text/javascript' src='http://code.jquery.com/jquery-2.0.0.min.js'></script>
+	<script  type='text/javascript' src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 </head>
 
 <body>

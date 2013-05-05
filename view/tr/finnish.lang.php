@@ -22,6 +22,7 @@ $lang = array(
 	"Create new"	=> "Luo uusi",
 	
 	/* show.php */
+	"Portions:"		=> "Annoksia:",
 	"This entry doesn't exist, please select another one." =>
 	"Valitsemaasi ohjetta ei ole olemassa, ole hyv&auml; ja valitse joku toinen.",
 	

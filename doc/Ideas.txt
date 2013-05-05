@@ -4,9 +4,9 @@ SUGGESTIONS:
 	- Installation, MySQL setup etc.
 	- Favorites
 	- Log system (for errors etc. mainly)
-	- Cooking mode: Slideshow, checklist...?
 	- A simple markup language and JS-based editor (suitelib!)
 	- Mobile interface
+	- Desktop interface
 	- Favicon
 
 HOMEPAGE:
@@ -17,4 +17,11 @@ RECIPES:
 	- When cooked last
 		-> History
 	- Recommendations
-	- Smart ingredients
+	- Versions
+	- Notes
+	- Images
+	- Optional ingredients: (...)
+	- OR operator: A || B
+	- Grocery list mode
+	- Cooking mode: Slideshow, checklist...?, timers
+	- Ingredient headers (e.g. Mausteet, Täyte, Kuorrutus)

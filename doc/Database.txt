@@ -9,7 +9,7 @@ time			TEXT					The time the recipe takes to cook
 ingredients		TEXT
 instructions	TEXT
 favorite		INTEGER	(BOOL)			Whether the recipe is a favourited or not
-	
+portions		INTEGER					How many portions the default recipe contains
 
 === categories ===
 id				INTEGER PRIMARY KEY
