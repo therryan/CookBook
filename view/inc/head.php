@@ -5,6 +5,7 @@ getconf('Username'); // This is here so that if the conf file is missing, it get
 <!DOCTYPE html>
 <html>
 <head>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans' rel='stylesheet' type='text/css'>
 	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 	<title>Cookbook</title>
 	<link rel='stylesheet' type='text/css' href='view/styles/main.css'>

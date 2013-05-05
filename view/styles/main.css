@@ -1,10 +1,7 @@
-/* --- Import -------------------------------- */
-@import url("fonts.css");
-
 /* --- Global -------------------------------- */
 *
 {
-	font-family: "MuseoSans 500", Verdana, Helvetica, sans-serif;
+	font-family: "Open Sans", Verdana, Helvetica, sans-serif;
 }
 
 * a
