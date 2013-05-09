@@ -6,7 +6,7 @@ getconf('Username'); // This is here so that if the conf file is missing, it get
 <html>
 <head>
 	<link href='http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans' rel='stylesheet' type='text/css'>
-	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	<meta charset='utf-8' />
 	<title>Cookbook</title>
 	<link rel='stylesheet' type='text/css' href='view/styles/main.css'>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />

@@ -14,8 +14,7 @@ HOMEPAGE:
 	
 RECIPES:
 	- Times cooked
-	- When cooked last
-		-> History
+	- When cooked last -> History
 	- Recommendations
 	- Versions
 	- Notes

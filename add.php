@@ -10,6 +10,7 @@ if (count($_POST) > 0) {
 	$recipe->setInstructions($_POST['instructions']);
 	$recipe->setTime($_POST['time']);
 	$recipe->setCategoryByID($_POST['category']);
+	$recipe->setPortions($_POST['portions']);
 	$recipe->DBInsert();
 }
 
@@ -29,13 +30,13 @@ $_POST = array();
 ?>
 <form action='add.php?action=show' method=post>
 	<div>
-		<p><?php tr('Title');?>:</p> <input type=text name=title id='title'
+		<p><?php tr('Title');?>: <input type=text name=title id='title'
   <?php // If the user came to add.php from index.php, pre-populate the title
         // The extra quotes are there to make sure that multi-word titles are displayed correctly
   if (count($_GET) > 0 && strlen($_GET['title']) > 0) {
-      echo 'value="'.$_GET['title'].'"'; } ?> />
+      echo 'value="'.$_GET['title'].'"'; } ?> /></p>
 	</div>
-	<p><?php tr('Category');?>:</p>
+	<p><?php tr('Category');?>:
 	<select name=category id='category'>
 		<?php
 			$db = DBConnect();
@@ -51,8 +52,9 @@ $_POST = array();
 				     $row['name']."</option>\n\r";
 			}
 		?>
-	</select>
+	</select></p>
 	<div>
+		<p><?php tr('Portions:'); ?><input type=text name=portions id='portions' /></p>
 		<p><?php tr('Ingredients');?>:</p> <textarea name=ingredients id='ingredients' rows=10 cols=40></textarea>
 	</div>
 	<div>

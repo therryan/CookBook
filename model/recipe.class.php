@@ -82,10 +82,10 @@ class Recipe
 		//OLD
 		$db = DBConnect();
 		$db->query("INSERT INTO recipes ".
-		           "(title, time, categoryID, ingredients, instructions, favorite) ".
+		           "(title, time, categoryID, ingredients, instructions, favorite, portions) ".
 		           "VALUES ('$this->title', '$this->time', ".
 				   "'$this->categoryID', '$this->ingr', '$this->instr', ".
-				   "'$this->fav')");
+				   "'$this->fav', '$this->portions')");
 		$db = null;
 	}
 	
@@ -103,8 +103,7 @@ class Recipe
 	
 	public function DBDelete()
 	{
-		if (!$this->isEmpty())
-		{
+		if (!$this->isEmpty()) {
 			$db = DBConnect();
 			$db->query("DELETE FROM recipes ".
 			           "WHERE id = $this->id");
@@ -250,12 +249,12 @@ class Recipe
 	public function setFavorite($newFav)
 	{
 		$newFav = intval($newFav);
-		if (is_numeric($newFav))
-		{
+		
+		if (is_numeric($newFav)) {
 			$newFav = (boolean)$newFav;
 		}
-		if (is_bool($newFav))
-		{
+		
+		if (is_bool($newFav)) {
 			$this->fav = $newFav;
 		}
 	}
